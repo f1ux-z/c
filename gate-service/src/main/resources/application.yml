@@ -1,0 +1,20 @@
+server:
+  port: 8836
+spring:
+  application:
+    name: gate-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: consumer-8801
+          uri: lb://consumer-8801
+#          uri: http://localhost:8801
+          predicates:
+            - Path=/hifeign/**,/hiribbon/**
+        - id: provider-8001
+          uri: lb://provider-8001
+          predicates:
+            - Path=/hello/nacos/**,/config/info/**
